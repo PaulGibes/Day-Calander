@@ -37,7 +37,6 @@ $(function () {
 
   for (let i = 0; i < hourSection.length; i++) {
     var hourSectionNum = hourSection.indexOf("#hour-" + [i]) + 1;
-    console.log(hourSectionNum);
 
     if (currentHour === hourSectionNum) {
       $(hourSection[i]).addClass("present");
@@ -50,6 +49,17 @@ $(function () {
     }
   }
 
+  // jquery way to write, on click execute the function that follows
+  $("button").click(function () {
+    // When you're within the jQuery chain or event you don't have to rerun the DOM query. $(this) will hold the element that you originally requested, button. It will attach all the jQuery prototype methods again.
+    // userInput is created and set equal to the value of the text area in that section because $(this).siblings selects siblings of that specific button.
+    var userInput = $(this).siblings("textarea").val();
+    // saveName is created and set to the value of the text content of buttons sibling, div.
+    var saveName = $(this).siblings("div").text();
+    // stores userInput as the key saveName in local storage.
+    localStorage.setItem(saveName, userInput);
+  });
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -60,6 +70,4 @@ $(function () {
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
 });
