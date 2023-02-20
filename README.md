@@ -1,4 +1,4 @@
-# Work Day Scheduler
+# Day Planner
 
 https://paulgibes.github.io/Day-Calender
 
