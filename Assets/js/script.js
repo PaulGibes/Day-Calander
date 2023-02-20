@@ -3,50 +3,110 @@
 // in the html. Shorthand for $(document).ready(function () {})
 $(function () {
   var hourSection = [
-    "#hour-1",
-    "#hour-2",
-    "#hour-3",
-    "#hour-4",
-    "#hour-5",
-    "#hour-6",
-    "#hour-7",
-    "#hour-8",
-    "#hour-9",
-    "#hour-10",
-    "#hour-11",
-    "#hour-12",
-    "#hour-13",
-    "#hour-14",
-    "#hour-15",
-    "#hour-16",
-    "#hour-17",
-    "#hour-18",
-    "#hour-19",
-    "#hour-20",
-    "#hour-21",
-    "#hour-22",
-    "#hour-23",
-    "#hour-24",
+    $("#hour-1").attr("id"),
+    $("#hour-2").attr("id"),
+    $("#hour-3").attr("id"),
+    $("#hour-4").attr("id"),
+    $("#hour-5").attr("id"),
+    $("#hour-6").attr("id"),
+    $("#hour-7").attr("id"),
+    $("#hour-8").attr("id"),
+    $("#hour-9").attr("id"),
+    $("#hour-10").attr("id"),
+    $("#hour-11").attr("id"),
+    $("#hour-12").attr("id"),
+    $("#hour-13").attr("id"),
+    $("#hour-14").attr("id"),
+    $("#hour-15").attr("id"),
+    $("#hour-16").attr("id"),
+    $("#hour-17").attr("id"),
+    $("#hour-18").attr("id"),
+    $("#hour-19").attr("id"),
+    $("#hour-20").attr("id"),
+    $("#hour-21").attr("id"),
+    $("#hour-22").attr("id"),
+    $("#hour-23").attr("id"),
+    $("#hour-24").attr("id"),
+    // "#hour-1",
+    // "#hour-2",
+    // "#hour-3",
+    // "#hour-4",
+    // "#hour-5",
+    // "#hour-6",
+    // "#hour-7",
+    // "#hour-8",
+    // "#hour-9",
+    // "#hour-10",
+    // "#hour-11",
+    // "#hour-12",
+    // "#hour-13",
+    // "#hour-14",
+    // "#hour-15",
+    // "#hour-16",
+    // "#hour-17",
+    // "#hour-18",
+    // "#hour-19",
+    // "#hour-20",
+    // "#hour-21",
+    // "#hour-22",
+    // "#hour-23",
+    // "#hour-24",
+  ];
+  var timeRow = [
+    $("#hour-1"),
+    $("#hour-2"),
+    $("#hour-3"),
+    $("#hour-4"),
+    $("#hour-5"),
+    $("#hour-6"),
+    $("#hour-7"),
+    $("#hour-8"),
+    $("#hour-9"),
+    $("#hour-10"),
+    $("#hour-11"),
+    $("#hour-12"),
+    $("#hour-13"),
+    $("#hour-14"),
+    $("#hour-15"),
+    $("#hour-16"),
+    $("#hour-17"),
+    $("#hour-18"),
+    $("#hour-19"),
+    $("#hour-20"),
+    $("#hour-21"),
+    $("#hour-22"),
+    $("#hour-23"),
+    $("#hour-24"),
   ];
   var currentHour = dayjs().hour();
 
+  // adds text to show the current day that refreshes every second
   timeInterval = setInterval(function () {
     var today = dayjs().format("dddd, MMMM D YYYY, h:mm:ss a");
     $(".today").text(today);
   }, 1000);
 
   for (let i = 0; i < hourSection.length; i++) {
-    var hourSectionNum = hourSection.indexOf("#hour-" + [i]) + 1;
+    // Uses the index number in the array hourSection.
+    var hourSectionNum = hourSection.indexOf("hour-" + [i]) + 1;
 
+    // adds a class to the time row div element depending on what the current time is.
     if (currentHour === hourSectionNum) {
-      $(hourSection[i]).addClass("present");
+      $(timeRow[i]).addClass("present");
     } else if (currentHour > hourSectionNum) {
-      $(hourSection[i]).addClass("past");
+      $(timeRow[i]).addClass("past");
     } else if (currentHour < hourSectionNum) {
-      $(hourSection[i]).addClass("future");
+      $(timeRow[i]).addClass("future");
     } else {
       console.log("Congratulations! You broke time!!");
     }
+  }
+
+  for (let i = 0; i < hourSection.length; i++) {
+    // in the selected time row, find the children elements with the name textarea and change its value to what is in local storage saved under hourSection[i], the id name
+    $(timeRow[i])
+      .children("textarea")
+      .val(localStorage.getItem(hourSection[i]));
   }
 
   // jquery way to write, on click execute the function that follows
@@ -54,20 +114,9 @@ $(function () {
     // When you're within the jQuery chain or event you don't have to rerun the DOM query. $(this) will hold the element that you originally requested, button. It will attach all the jQuery prototype methods again.
     // userInput is created and set equal to the value of the text area in that section because $(this).siblings selects siblings of that specific button.
     var userInput = $(this).siblings("textarea").val();
-    // saveName is created and set to the value of the text content of buttons sibling, div.
-    var saveName = $(this).siblings("div").text();
+    // saveName is created and set to the value of the id of it's parent
+    var saveName = $(this).parent().attr("id");
     // stores userInput as the key saveName in local storage.
     localStorage.setItem(saveName, userInput);
   });
-
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
 });
