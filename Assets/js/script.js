@@ -79,6 +79,7 @@ $(function () {
     $("#hour-24"),
   ];
   var currentHour = dayjs().hour();
+  var workDayStatus;
 
   // adds text to show the current day that refreshes every second
   timeInterval = setInterval(function () {
@@ -118,5 +119,21 @@ $(function () {
     var saveName = $(this).parent().attr("id");
     // stores userInput as the key saveName in local storage.
     localStorage.setItem(saveName, userInput);
+  });
+
+  $(".clearButton").click(function () {
+    localStorage.clear();
+  });
+
+  $(".workDayButton").click(function () {
+    if (workDayStatus) {
+      $(".offTime").css("display", "none");
+      $(".workDayButton").text("Full Day");
+      workDayStatus = false;
+    } else {
+      $(".offTime").css("display", "flex");
+      $(".workDayButton").text("Work Day");
+      workDayStatus = true;
+    }
   });
 });
